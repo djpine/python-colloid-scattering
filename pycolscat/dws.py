@@ -19,13 +19,12 @@ import scipy.integrate as spint
 from pycolscat.mie import Mie
 from pycolscat.diffusion import hydro
 
-__all__ = ['ref_index_MG', 'ref_index_BG', 'qeff', 'mfp', 'diff_eff']
-
 
 def _intgrnd_FS(theta, mie_inst, s, kam, *sparams):
     """
     Integrand for calculating the mean free path using
-    Percus-Yevick hard-sphere structure factor
+    a suitable structure factor to describe the correlations
+    betwwn particles
     qd : wavevector times the particle diameter
     phi : volume fraction of spheres
     mie_inst : instance of Mie class from mie_uniform_sphere
@@ -81,8 +80,42 @@ def ref_index_BG(n_m, n_p, phi):
     return np.sqrt(e_BG)
 
 
-def qeff(mie_inst, s, kam, sparams):
-    """Returns scattering efficiency factors for Mie + structure"""
+def qefc(mie_inst, s, kam, sparams):
+    """
+    Calculates the scattering and transport efficiency factors for
+    light scattering from spherical colloids with interparticle
+    correlations characterized by a static structure factor S(q).
+
+    Parameters
+    ----------
+    mie_inst : instance of the Mie class included in this package
+        particle size and refractive index contrast for Mie scattering
+        from individual particles are specified at instantiation
+    s : function (not a NumPy ufunc)
+        static structure factor S(q) for a single value of q.  The
+        first argument of s must be qd, the wavevector times the
+        particle diameter.
+    kam : value of ka, wavevector [in the effective medium for S(q)]
+        times the particle radius.  To determine the efficiency
+        factors, this routine performs a numerical integration
+        over the scattering angles theta. The value of kam is used
+        to convert the scattering angles to the wavevectors.  The
+        refractive index of the effective medium should be used to
+        determine kam.
+    sparams : tuple (not an iterable like *params would be)
+        Extra arguments of s [after the first argument, which must be
+        qd].  Arguments must be written in the same order that they
+        appear in s.  Note that if there is only one extra argument
+        of s besides qd, say phi, the tuple is written as (phi,) with
+        a comma.
+
+    Returns
+    -------
+    qsca, qtra : floats
+        The dimensionless scattering and transport efficiency factors
+        for particles at finite volume fractions phi where there are
+        significant spatial correlations in the particle positions.
+    """
     intgrl1 = spint.quad(_intgrnd_FS, 0., np.pi, args=(mie_inst, s, kam, *sparams))
     intgrl2 = spint.quad(_intgrnd_FStrans, 0., np.pi, args=(mie_inst, s, kam, *sparams))
     ka2 = mie_inst.x * mie_inst.x
@@ -92,15 +125,101 @@ def qeff(mie_inst, s, kam, sparams):
 
 
 def mfp(mie_inst, phi, s, kam, sparams):
-    """Returns mean free paths for Mie + structure"""
-    qsca, qtra = qeff(mie_inst, s, kam, sparams)
+    """
+    Calculates the scattering and transport mean free paths for
+    light scattering from spherical colloids with interparticle
+    correlations characterized by a static structure factor S(q).
+
+    Parameters
+    ----------
+    mie_inst : instance of the Mie class included in this package
+        particle size and refractive index contrast for Mie scattering
+        from individual particles are specified at instantiation.
+    phi : float
+        volume fraction of particles.  Note that this is used only
+        to calculate the number density of particles needed to
+        determine the mean free paths.  If one of the arguments of
+        s is also the volume fraction, that is specified separately
+        in the tuple sparams.
+    s : function (not a NumPy ufunc)
+        static structure factor S(q) for a single value of q.  The
+        first argument of s must be qd, the wavevector times the
+        particle diameter.
+    kam : value of ka, wavevector [in the effective medium for S(q)]
+        times the particle radius.  To determine the efficiency
+        factors, this routine performs a numerical integration
+        over the scattering angles theta. The value of kam is used
+        to convert the scattering angles to the wavevectors.  The
+        refractive index of the effective medium should be used to
+        determine kam.
+    sparams : tuple (not an iterable like *params would be)
+        Extra arguments of s [after the first argument, which must be
+        qd].  Arguments must be written in the same order that they
+        appear in s.  Note that if there is only one extra argument
+        of s besides qd, say phi, the tuple is written as (phi,) with
+        a comma.
+
+    Returns
+    -------
+    smfp, tmfp : floats [m]
+        The scattering and transport mean free paths in meters for
+        particles at finite volume fractions phi where there are
+        significant spatial correlations in the particle positions.
+    """
+
+    qsca, qtra = qefc(mie_inst, s, kam, sparams)
     smfp = 4. * mie_inst.a_p / (3. * phi * qsca)
     tmfp = 4. * mie_inst.a_p / (3. * phi * qtra)
     return smfp, tmfp
 
 
 def diff_eff(mie_inst, phi, s, kam, sparams, g, gparams):
-    """Returns effective diffusion coefficient"""
+    """
+    Calculates the dimensionless effective diffusion coefficient
+    Deff/D0, where D0 is the Stokes-Einstein diffusion coefficient,
+    and the dimensionless decay rate (Deff/D0) kam^2.
+
+    Parameters
+    ----------
+    mie_inst : instance of the Mie class included in this package
+        particle size and refractive index contrast for Mie scattering
+        from individual particles are specified at instantiation.
+    phi : float
+        volume fraction of particles.  Note that this is used only
+        to calculate the number density of particles needed to
+        determine the mean free paths.  If one of the arguments of
+        s is also the volume fraction, that is specified separately
+        in the tuple sparams.
+    s : function (not a NumPy ufunc)
+        static structure factor S(q) for a single value of q.  The
+        first argument of s must be qd, the wavevector times the
+        particle diameter.
+    kam : value of ka, wavevector [in the effective medium for S(q)]
+        times the particle radius.  To determine the efficiency
+        factors, this routine performs a numerical integration
+        over the scattering angles theta. The value of kam is used
+        to convert the scattering angles to the wavevectors.  The
+        refractive index of the effective medium should be used to
+        determine kam.
+    sparams : tuple (not an iterable like *params would be)
+        Extra arguments of s [after the first argument, which must be
+        qd].  Arguments must be written in the same order that they
+        appear in s.  Note that if there is only one extra argument
+        of s besides qd, say phi, the tuple is written as (phi,) with
+        a comma.
+    g : function (not a NumPy ufunc)
+        radial distribution function for a single value of q.  The
+        first argument of g must be r/sigma, the radial distance from
+        a particle center, divided by the particle diameter sigman.
+        g should correspond to the same correlations as the static
+        structure factor s.
+    gparams : tuple (not an iterable like *params would be)
+        Extra arguments of g [after the first argument, which must be
+        qd].  Arguments must be written in the same order that they
+        appear in s.  Note that if there is only one extra argument
+        of s besides qd, say phi, the tuple is written as (phi,) with
+        a comma.
+    """
     intgrl2 = spint.quad(_intgrnd_FStrans, 0., np.pi, args=(mie_inst, s, kam, *sparams))
     intgrl3 = spint.quad(_intgrnd_FH1cos, 0., np.pi, args=(mie_inst, g, phi, kam, *gparams))
     diff = intgrl3[0] / intgrl2[0]
