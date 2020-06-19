@@ -43,7 +43,8 @@ def mie_coefs_up(x, m, nmax):
     Page numbers refer to Ref. 1 by van de Hulst.
     Warning: Uses upward recurrence to calculate a and b
     coefficients, which is unstable for large size
-    parameters x.
+    parameters x.  Generally works well for particles up
+    to several microns in size.
     ...
     Arguments
     ---------
@@ -143,9 +144,6 @@ class Mie:
     _______
     qext : float
         Returns Qext, extinction cross section divided by geometrical cross
-        section as defined on page 127 vdH
-    qext : float
-        Returns Qext, extinction cross section divided by geometrical cross
         section using formula on page 127 vdH
     qscat : float
         Returns Qsca, scattering cross section divided by geometrical cross
@@ -185,7 +183,7 @@ class Mie:
         self.mc = self.n_p / self.n_m
         self.wavelength = wavelength
         self.y = self.n_p * ka  # wavevector in particle times particle radius
-        self.x = x
+        self.x = x  # size parameter: wavevector in medium times particle radius
         self.a, self.b = mie_coefs(self.x, self.mc, self.nmax)
 
     def _pi_tau(self, costheta):
