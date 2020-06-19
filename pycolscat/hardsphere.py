@@ -18,6 +18,7 @@ import numpy as np
 # Suppress runtime warnings for innocuous zero-divides
 import warnings
 
+# Suppress warnings on calculations in np.where that don't meet logical condition
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 
@@ -28,10 +29,10 @@ def g_PY(r, phi):
 
     Parameters
     ----------
-    phi : float
-        volume fraction of spheres
     r :  float or numpy.ndarray
         radial distance divided by hard-sphere diameter
+    phi : float
+        volume fraction of spheres
 
     Returns
     -------
@@ -101,8 +102,8 @@ def s_PY(qd, phi):
 
     Parameters
     ----------
-    phi : volume fraction of spheres
     qd : q-vector times the sphere diameter
+    phi : volume fraction of spheres
 
     Returns
     -------
