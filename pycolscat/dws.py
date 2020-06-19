@@ -201,7 +201,7 @@ def diff_eff(mie_inst, phi, s, kam, sparams, g, gparams):
         to convert the scattering angles to the wavevectors.  The
         refractive index of the effective medium should be used to
         determine kam.
-    sparams : tuple (not an iterable like *params would be)
+    sparams : tuple (not an iterable like *sparams would be)
         Extra arguments of s [after the first argument, which must be
         qd].  Arguments must be written in the same order that they
         appear in s.  Note that if there is only one extra argument
@@ -213,7 +213,7 @@ def diff_eff(mie_inst, phi, s, kam, sparams, g, gparams):
         a particle center, divided by the particle diameter sigman.
         g should correspond to the same correlations as the static
         structure factor s.
-    gparams : tuple (not an iterable like *params would be)
+    gparams : tuple (not an iterable like *gparams would be)
         Extra arguments of g [after the first argument, which must be
         qd].  Arguments must be written in the same order that they
         appear in s.  Note that if there is only one extra argument
