@@ -22,8 +22,8 @@ Notes
 -----
 1. The MSA approximation gives reasonable results for small spheres when
    the Debye screening length is comparable to the particle size.  It gives
-   erroneous result, including a g(r) the can be less than zero near
-   contact for larger particles with paramenters characteristic of many
+   erroneous results, including a g(r) the can be less than zero near
+   contact for larger particles with parameters characteristic of many
    colloids.
 """
 import numpy as np
