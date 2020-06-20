@@ -5,7 +5,7 @@ Demonstration of hydro, dcoop, and dstokesEin functions to calculate H(q)
 and D(q)/D_0 for several different volume fractions. This code takes about 15
 seconds for each calculation on a 2018-vintage MacBookPro.  It uses the radial
 distribution function g(r) for hard spheres, which is imported from the
-structure module available in this package. Because the routine  calculates H(q)
+hardsphere module available in this package. Because the routine  calculates H(q)
 at a single q (and phi) only, the code below uses list-map-lambda to generate an
 array of H(q) values for each volume fraction phi. It produces a plot for direct
 comparison to Figs. 6 & 8 in Snook et al.
@@ -21,10 +21,7 @@ import time
 params = {'font.size': 9,
           'font.family': 'sans-serif',
           'font.sans-serif': 'Arial',
-          'lines.markersize': 3,
-          'legend.borderpad': 0.25,
-          'legend.handletextpad': 0.2,
-          'legend.handlelength': 1.5}
+          'lines.markersize': 3}
 rcParams.update(params)
 
 # input parameters and test diff_stokesEin function
