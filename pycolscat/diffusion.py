@@ -42,6 +42,7 @@ from scipy.constants import Boltzmann as kB
 
 
 def hydro(q, phi, g, *gparams):
+    # TODO: refactor and speed up with numba
     """
     Parameters
     ----------
