@@ -1,14 +1,28 @@
 # -*- coding: utf-8 -*-
 # Copyright 2019-2020, David J. Pine
+#
+# This package is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+#
+# This package is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+# details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this package. If not, see <http://www.gnu.org/licenses/>.
+"""
+Routine for testing and demonstrating the use of dws.py
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
-
-# sys.path.append('../transport')
 import pycolscat.hardsphere as hs
 from pycolscat.mie import Mie
 
-from pycolscat.dws import qeff, mfp, ref_index_BG, diff_eff
+from pycolscat.dws import qefc, mfp, ref_index_BG, diff_eff
 from pycolscat.diffusion import dstokesEin
 
 # Parameters for plots
@@ -57,7 +71,7 @@ for i, phi in enumerate(phi_range):
     n_em[i] = ref_index_BG(n_m, n_p, phi)
     kam = ka0 * n_em[i]
     # Calculate efficiency factors and mean free paths
-    qsca[i], qtra[i] = qeff(p1, hs.s_PY, kam, (phi,))
+    qsca[i], qtra[i] = qefc(p1, hs.s_PY, kam, (phi,))
     smfp[i], tmfp[i] = mfp(p1, phi, hs.s_PY, kam, (phi,))
     # Calculate effective diffusion coefficient
     if hydrocalc is True:
@@ -96,7 +110,8 @@ if hydrocalc is True:
     ax[1, 1].set_xlim(0., 0.5)
     ax[1, 1].set_xlabel('volume fraction')
     txt = r'$D_\mathrm{eff}/D_0 = \langle D \rangle/D_0$, effective diffusion coefficient'
-    ax[1, 1].set_ylabel(txt)
+    ax[1, 1].set_ylabel(txt, color='C0')
+    ax[1, 1].tick_params('y', colors='C0')
     axright = ax[1, 1].twinx()
     axright.plot(phi_range, D0 * decayrate / radius ** 2, 'o', color='C3')
     txt = r'$D_\mathrm{eff}k_\mathrm{em}^2$, decay rate [$s^{-1}$]'
@@ -104,6 +119,6 @@ if hydrocalc is True:
     axright.tick_params('y', colors='C3')
     txt = r'$D_0 = {0:0.3g}~\mu$m$^2$/s'.format(D0 * 1.e12)
     ax[1, 1].text(0.98, 0.98, txt, ha='right', va='top', transform=ax[1, 1].transAxes)
-    plt.savefig('./plots/dws_test.pdf')
+    plt.savefig('./plots/dws_demo.pdf')
 
 plt.show()
