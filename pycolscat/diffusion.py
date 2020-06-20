@@ -54,7 +54,7 @@ def hydro(q, phi, g, *gparams):
         function name of radial distribution function g(r)
         This should be supplied by an external module (such as the hard_sphere_structure
         module available in David Pine's GitHub repository)
-    *gparams : tuple
+    *gparams : tuple (iterable)
         extra arguments of function g(r) [such as phi, screening length, etc, as needed]
 
     Returns
@@ -159,12 +159,14 @@ def dcoop(q, phi, g, gparams, s, sparams):
     g : function name of radial distribution function g(r)
         This should be supplied by an external module (such as the hard_sphere_structure
         module available in David Pine's GitHub repository)
+    gparams : tuple
+        extra arguments of function g(r) [such as phi, screening length, etc, as needed]
     s : func
         function name of static structure factor S(q)
         This should be supplied by an external module (such as the hard_sphere_structure
         module available in David Pine's GitHub repository)
-    *gparams : tuple
-        extra arguments of function g(r) [such as phi, screening length, etc, as needed]
+    sparams : tuple
+        extra arguments of function s(qd) [such as phi, screening length, etc, as needed]
 
     Returns
     -------
