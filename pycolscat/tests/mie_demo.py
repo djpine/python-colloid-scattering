@@ -48,5 +48,5 @@ ax.text(0.98, 0.57, '$x = {0:0.3f}$\nRe$(m) = {1:0.3f}$\nIm$(m) = {2:0.3f}$'.for
         ha='right', va='top', transform=ax.transAxes)
 ax.set_title('Compare to Bohren & Huffman Fig 4.9, page 115')
 
-plt.savefig('./plots/mie_test.pdf')
+plt.savefig('./plots/mie_demo.pdf')
 plt.show()
