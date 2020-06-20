@@ -4,10 +4,10 @@ from scipy.constants import Boltzmann as kB
 import pycolscat.yukawaMSAallroots as ykwaAll
 
 # Assign values to parameters for input to yukawaMSA.msaHP
-sigma = 500.e-9  # [m] hard-core diameter
+sigma = 5.e-9  # [m] hard-core diameter
 phi = 0.3  # volume fraction
-zeff = 800.  # effective charge
-debye_length = 100.e-9  # [m] Debye screening length
+zeff = 20.  # effective charge
+debye_length = 2.5e-9  # [m] Debye screening length
 epsilon = 78.3  # dielectric constant of solvent (water)
 tempC = 25.  # [°C] temperature in degrees Celcius
 
@@ -77,5 +77,5 @@ ax[0, 1].legend(loc='upper right', title='        root')
 
 plt.subplots_adjust(wspace=0.24)
 
-plt.savefig('./plots/yukawaMSAallroots.pdf')
+plt.savefig('./plots/yukawaMSAallroots_demo.pdf')
 plt.show()
