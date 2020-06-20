@@ -33,5 +33,5 @@ ax2.set_ylabel('$S(q)$')
 ax2.legend(loc='upper right', title='$\qquad\phi$')
 
 fig.suptitle("Percus-Yevick structure for hard spheres")
-plt.savefig('./plots/hardsphere_test.pdf')
+plt.savefig('./plots/hardsphere_demo.pdf')
 plt.show()
