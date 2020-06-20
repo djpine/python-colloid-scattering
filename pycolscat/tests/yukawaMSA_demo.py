@@ -77,5 +77,5 @@ ax[0, 1].axvline(x=1, color='gray', lw=0.5, zorder=-1, dashes=(10, 4))
 fig.suptitle('Compare with Fig. 1 in Hayter & Penfold, Mol. Phys. vol. 42, pp. 109-118, (1981)')
 
 plt.subplots_adjust(wspace=0.24)
-plt.savefig('./plots/yukawaMSA_test.pdf')
+plt.savefig('./plots/yukawaMSA_demo.pdf')
 plt.show()
