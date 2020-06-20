@@ -88,5 +88,5 @@ for ax in [ax1, ax2]:
     ax.set_xlim(0., 20.6)
     ax.set_xlabel("$qd$")
 
-plt.savefig('./plots/diffusion_test.pdf')
+plt.savefig('./plots/diffusion_demo.pdf')
 plt.show()
