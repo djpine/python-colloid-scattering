@@ -1,6 +1,6 @@
 # pycollscat
-**Python programs for the analysis of static and<br/>
-dynamic, single and multiple light scattering**
+**Python routines for the analysis of static and dynamic single,<br/>
+(DLS) and multiple (DWS) light scattering from colloids**
 
 by David J. Pine
 
