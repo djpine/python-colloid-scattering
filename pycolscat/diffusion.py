@@ -53,7 +53,7 @@ def hydro(q, phi, g, *gparams):
     g : string
         function name of radial distribution function g(r)
         This should be supplied by an external module (such as the hard_sphere_structure
-        module available in David Pine's GitHub repository)
+        module available in this package)
     *gparams : tuple (iterable)
         extra arguments of function g(r) [such as phi, screening length, etc, as needed]
 
