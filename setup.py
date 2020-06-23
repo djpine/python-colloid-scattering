@@ -7,7 +7,7 @@ setuptools.setup(
     author_email="pine@nyu.edu",
     description="Python package for analysis of single & multiple, static & dynamic light scattering from colloids",
     url="https://github.com/djpine/ColloidScat",
-    packages=[pycollscat],
+    packages=[pycolscat],
     install_requires=['numpy', 'scipy']
 )
 
