@@ -46,13 +46,13 @@ def hydro(q, phi, g, *gparams):
     """
     Parameters
     ----------
-    q : float [NOT an array]
+    q : float
         q-vector times particle diameter
     phi : float
         volume fraction
     g : string
         function name of radial distribution function g(r)
-        This should be supplied by an external module (such as the hard_sphere_structure
+        This should be supplied by an external module (such as the hardsphere
         module available in this package)
     *gparams : tuple (iterable)
         extra arguments of function g(r) [such as phi, screening length, etc, as needed]
