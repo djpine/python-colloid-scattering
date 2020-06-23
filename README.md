@@ -1,4 +1,4 @@
-# pycollscat
+# pycolscat
 **Python routines for the analysis of static and dynamic single,<br/>
 (DLS) and multiple (DWS) light scattering from colloids**
 
